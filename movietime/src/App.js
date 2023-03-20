@@ -1,20 +1,30 @@
-import {useState, useEffect } from "react";
-import logo from './logo.svg';
+import { React, useState, useEffect } from 'react';
 import './App.css';
+import Moviecard from './Components/Moviecard';
+import Searchresult from './Components/Searchresults';
 
-const URL = `http://www.omdbapi.com/?apikey=83cfc641&s="James+Bond"`;
 function App() {
-    const[movies, setMovies] = useState(0)
+    const [movies, setMovies] = useState([0]);
+    const [searchValue, setSearchValue] = useState("James Bond");
 
+    const getMovieRequest = async () => {
+    const URL = `http://www.omdbapi.com/?apikey=83cfc641&s=${searchValue}`;
+    const response = await fetch(URL);
+    const responseJson = await response.json();
+    console.log(responseJson);
+    setMovies(responseJson.Search);
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            const result = await fetch(URL)
-            result.json().then(json => {
-                //console.log(json);
-            })
-        }
-        fetchData();
-    }, []);
+        getMovieRequest();
+    }, [searchValue] );
+
+
+   return (
+    <>
+    <Searchresult searchValue={searchValue} setSearchValue={setSearchValue}/>
+    <Moviecard movies={movies} />
+    </>
+   )
 }
 
 
