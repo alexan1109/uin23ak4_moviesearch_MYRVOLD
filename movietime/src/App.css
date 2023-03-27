@@ -2,12 +2,13 @@ body {
   background-color: slategray;
 }
 
+
 #flex {
   display: flex;
   flex-wrap: wrap;
 }
 .flex-columns {
   flex: 1 0 45%;
-  margin: 2px;
+  margin: 5px;
 
 }
